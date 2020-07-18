@@ -1,13 +1,13 @@
-FROM alpine:3.7
+FROM registry.fedoraproject.org/fedora-minimal 
 
-COPY target/amazon-dynamodb-quickstart-1.0-SNAPSHOT-runner.sh /home/app/app.sh
+WORKDIR /work/ 
 
-USER root
+COPY target/*-runner /work/application 
 
-RUN chmod 777 -R /home/app/app.sh
+RUN chmod 775 /work 
 
 VOLUME /usr/local/lib/app
 
 EXPOSE 8080
 
-ENTRYPOINT ["./home/app/app.sh"]
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
